@@ -89,7 +89,7 @@ body {
 
 .bem-vindo {
     position: relative;
-    padding: 50px 50px;
+    padding: 20px 50px;
     font-family: 'Inter';
     font-weight: 700;
     font-size: xx-large;
@@ -99,7 +99,7 @@ body {
 .recuperacao label {
     position: relative;
     display: inline;
-    padding: 40px 60px;
+    padding: 2px 55px;
     font-family: 'Inter';
     font-weight: bold;
     font-size: 100%;
@@ -126,7 +126,7 @@ body {
     align-items: center;
     justify-content: space-between;
     border-radius: 10px;
-    padding: 0px 160px;
+    text-align: 10px;
     font-family: 'Inter';
     font-weight: bolder;
     font-size: large;
@@ -149,7 +149,7 @@ body {
 
 .recuperacao button {
     position: relative;
-    display: block;
+    display: flex;
     left: 23%;
     color: #111E3E;
     background: #D9D9D9;
@@ -166,4 +166,5 @@ body {
     background-color: #c0c0c0;
     cursor: pointer;
 }
+
     
