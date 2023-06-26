@@ -121,11 +121,14 @@ body {
 
 .password-input {
     display: flex;
-    align-items: center;
-    justify-content: center ;
+    justify-content: space-between ;
     background-color: #71767B;
     border-radius: 10px;
 }
+
+.togglevisibilityButton img {
+    background-color: #D9D9D9;
+}   
 
 .login ul li input {
     border: none;
