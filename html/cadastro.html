@@ -15,10 +15,10 @@
         <nav class="barra-de-navegacao">
             <ul>
                 <li>
-                     <a href="http://127.0.0.1:3000/html/cadastro.html" class="">Criar Conta</a>
+                     <a href="cadastro.html" class="">Criar Conta</a>
                 </li>
                 <li>
-                    <a href="http://127.0.0.1:3000/html/login.html" class="entrar">Entrar</a>
+                    <a href="login.html" class="entrar">Entrar</a>
                 </li>
             </ul>
         </nav>
@@ -30,14 +30,24 @@
         <div class="user-img"><img src="..\img\ph_user-circle-thin.png" alt="user"></div>
         
         <ul>
-            <li><input type="text" placeholder="Nome"></li>
+            <li><input type="text" placeholder="Nome" id = "Nome"></li>
             <li><input class="genero" type="text" placeholder="Gênero"></li>
-            <li><input type="text" placeholder="Cargo"></li>
-            <li><input type="text" placeholder="Email"></li>
-            <li><input type="text" placeholder="Senha"></li>
+            <li><input type="text" placeholder="Cargo" id="Cargo"></li>
+            <li><input type="text" placeholder="Email" id="Email"></li>
+            <li><input type="password" placeholder="Senha" id="Senha"></li>
         </ul> 
-        <div class="tem-conta">Já possui uma conta? <a href="http://127.0.0.1:3000/html/login.html">Acesse aqui!</a></div>
-        <button>Cadastrar</button>
+        <div class="tem-conta">Já possui uma conta? <a href="login.html">Acesse aqui!</a></div>
+        <button onclick="cadastrar()">Cadastrar</button>
+
+        <script type="module">
+            
+            function cadastrar(){
+                let nome = document.getElementById("Nome").value;
+                let cargo = document.getElementById("Cargo").value;
+                let email = document.getElementById("Email").value;
+                let senha = document.getElementById("Senha").value;
+            }
+        </script>
     </form>
 
     <footer></footer>
