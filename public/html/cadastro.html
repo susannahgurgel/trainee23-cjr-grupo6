@@ -46,6 +46,21 @@
                 let cargo = document.getElementById("Cargo").value;
                 let email = document.getElementById("Email").value;
                 let senha = document.getElementById("Senha").value;
+
+                var obj = {
+                    nome: nome,
+                    cargo: cargo,
+                    email: email,
+                    senha: senha
+                };
+
+                fetch("/sign-up",{
+                    method:"POST",
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    body:JSON.stringify(obj)
+                })
             }
         </script>
     </form>
