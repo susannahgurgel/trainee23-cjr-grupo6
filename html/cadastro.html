@@ -4,7 +4,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
         </style>
-    <link rel="stylesheet" href="..\style\cadastro.css">
+    <link rel="stylesheet" href="/../style/cadastro.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CJR</title>
@@ -30,38 +30,40 @@
         <div class="user-img"><img src="..\img\ph_user-circle-thin.png" alt="user"></div>
         
         <ul>
-            <li><input type="text" placeholder="Nome" id = "Nome"></li>
-            <li><input class="genero" type="text" placeholder="Gênero"></li>
-            <li><input type="text" placeholder="Cargo" id="Cargo"></li>
-            <li><input type="text" placeholder="Email" id="Email"></li>
-            <li><input type="password" placeholder="Senha" id="Senha"></li>
+            <li><input type="text" placeholder="Nome" class = "nome"></li>
+            <li><input type="text" placeholder="Gênero" class="genero"></li>
+            <li><input type="text" placeholder="Cargo" class="cargo"></li>
+            <li><input type="text" placeholder="Email" class="email"></li>
+            <li><input type="password" placeholder="Senha" class="senha"></li>
         </ul> 
         <div class="tem-conta">Já possui uma conta? <a href="login.html">Acesse aqui!</a></div>
-        <button onclick="cadastrar()">Cadastrar</button>
+        <button>Cadastrar</button>
 
-        <script type="module">
+        <script>
             
-            function cadastrar(){
-                let nome = document.getElementById("Nome").value;
-                let cargo = document.getElementById("Cargo").value;
-                let email = document.getElementById("Email").value;
-                let senha = document.getElementById("Senha").value;
+            var novoNome = document.querySelector(".nome");
+            var novoCargo = document.querySelector(".cargo");
+            var novoEmail = document.querySelector(".email");
+            var novaSenha = document.querySelector(".senha");
+            var botao = document.querySelector("button");
+
+            botao.addEventListener("click", () => {
 
                 var obj = {
-                    nome: nome,
-                    cargo: cargo,
-                    email: email,
-                    senha: senha
+                    nome: novoNome.value,
+                    cargo: novoCargo.value,
+                    email: novoEmail.value,
+                    senha: novaSenha.value
                 };
-
-                fetch("/sign-up",{
+                
+                fetch("http://localhost:3000/sign-up",{
                     method:"POST",
                     headers:{
                         "Content-type": "application/json"
                     },
                     body:JSON.stringify(obj)
                 })
-            }
+            })
         </script>
     </form>
 
