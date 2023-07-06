@@ -1,0 +1,14 @@
+.feed {
+    border: 0px 1px 0px 1px;
+    border-color: #7E7E7E;
+    border-style: solid;
+    position: fixed;
+    left: 27%;
+    top: 8.4%;
+    display: block;
+    width: 45%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}

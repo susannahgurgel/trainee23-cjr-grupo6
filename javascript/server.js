@@ -1,16 +1,13 @@
 import express from "express";
-import User from "./user/user.service.js";
+import authRouter from "./auth/auth.controller.js";
 import cors from "cors";
 
 const app = express();
 
-app.use(express.json())
-app.use(cors())
+app.use(express.json());
+app.use(cors());
+app.use(authRouter);
 
-app.listen(3000, () => {
-    console.log("o servidor esta funcionando")
-})
-
-app.post("/sign-up",(req,res) => {
-    console.log(req.body)
+app.listen(4545, () => {
+    console.log("o servidor esta funcionando");
 })

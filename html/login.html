@@ -5,7 +5,8 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
     </style>
-    <link rel="stylesheet" href="..\style\login.css">
+    <link rel="stylesheet" href="/../style/login.css">
+    <link rel="stylesheet" href="/../style/default.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
@@ -34,12 +35,12 @@
                 <ul>
                     <div class="login-input">
                         <img src="..\img\user.png">
-                        <li><input type="text" placeholder="Login"></li>
+                        <li><input type="text" placeholder="Login" class = "iLogin"></li>
                     </div>
                     <div class="password-input">
                         <img src="..\img\lock.png">
                         <li>
-                        <input type="password" placeholder="Senha">
+                        <input type="password" placeholder="Senha" class = "iSenha">
                         <img src="..\img\eye-off-outline.png">
                         </li>
                     </div>
@@ -47,6 +48,28 @@
                     <div class="login-button">
                         <button>Entrar</button>
                     </div>
+
+                    <script>
+                        var userLogin = document.querySelector(".iLogin");
+                        var userSenha = document.querySelector(".iSenha");
+                        var botao = document.querySelector("button");
+
+                        botao.addEventListener("click", () => {
+
+                            var obj = {
+                                login: userLogin.value,
+                                password: userSenha.value
+                            }
+
+                            fetch("http://localhost:4545/sign-in",{
+                                method:"POST",
+                                headers:{
+                                    "Content-type": "application/json"
+                                },
+                                body:JSON.stringify(obj)
+                            })
+                        })
+                    </script>
                 </ul>
             </form>
         </div>

@@ -49,7 +49,7 @@ class User {
     async findByUsername(userName){
         const prisma = new PrismaClient();
 
-        return await prisma.User.findUnique()({
+        return await prisma.User.findUnique({
             where: {
                 username: userName
             },
@@ -61,14 +61,11 @@ class User {
 
     async findByEmail(userEmail){
         const prisma = new PrismaClient();
-
-        return await prisma.User.findUnique()({
+        return await prisma.User.findUnique({
             where: {
                 email: userEmail
             },
         }).catch(e => {
-            if (e.code == 'P2025') throw new Error('Email não encontrado');
-            throw e;
         })
     }
 }
