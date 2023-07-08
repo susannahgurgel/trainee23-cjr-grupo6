@@ -26,4 +26,6 @@ authRouter.post("/sign-up", async (req, res) => {
     }
 })
 
+authRouter.get()
+
 export default authRouter;

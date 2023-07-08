@@ -6,17 +6,18 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./database.db"
 }
 
 model User {
-  id         String   @id @db.VarChar(50)
-  username   String   @unique @db.VarChar(50)
-  senha      String   @db.VarChar(250)
-  gender     String   @db.Char(5)
-  email      String   @unique @db.VarChar(250)
-  cargo      String   @db.VarChar(250)
-  admin      Boolean
-  created_at DateTime @db.Timestamp()
+  id         Int      @id @default(autoincrement())
+  username   String   @unique
+  senha      String
+  gender     String
+  email      String   @unique
+  cargo      String
+  image      String
+  admin      Boolean  @default(false)
+  created_at DateTime @default(now())
 }
