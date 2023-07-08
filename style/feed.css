@@ -1,0 +1,42 @@
+.feed {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feed-container{
+    display: flex;
+    flex-direction: column;
+    width: 547px;
+    height: 605px;
+    margin-top: 4rem;
+    align-items: center;
+    justify-content: flex-start;
+    background: #222E50;
+    border-radius: 10px;
+}
+
+.feed-post-user{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+}
+
+.feed-post-user img{
+    border-radius: 100%;
+    max-width: 48px;
+    max-height: auto;
+}
+
+.feed-post-user-name{
+    color: white;
+}
+
+.feed-post-user-date{
+    color: #71767B;
+}
+
+.feed-post-content{
+    color: white;
+}
