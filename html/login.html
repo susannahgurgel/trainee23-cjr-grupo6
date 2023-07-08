@@ -68,6 +68,8 @@
                                 },
                                 body:JSON.stringify(obj)
                             })
+                            localStorage.setItem('username', userLogin.value);
+                            localStorage.setItem('page', userLogin.value);
                             document.location.href = "perfil.html";
                         })
                     </script>

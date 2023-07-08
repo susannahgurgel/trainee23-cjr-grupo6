@@ -4,7 +4,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
         </style>
-    <link rel="stylesheet" href="/../style/default.css">
+    <link rel="stylesheet" href="/../style/defaultLogged.css">
     <link rel="stylesheet" href="/../style/perfil.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,6 +40,21 @@
             <p class="publicacoes">Publicações</p>
         </div>
     </div>
+
+    <script>
+        profileUsername = localStorage.getItem('page')
+        document.querySelector(".username").innerHTML = profileUsername;
+        fetch("http://localhost:4545/"+profileUsername)
+            .then(res => console.log(res.json))
+        try{
+            var username = localStorage.getItem('username')
+            if (username == profileUsername){
+            }
+        } catch(e){
+            res.status(400).json({message: e.message});
+        }
+
+    </script>
     <footer></footer>
 </body>
 </html>

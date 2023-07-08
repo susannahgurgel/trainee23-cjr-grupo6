@@ -1,5 +1,6 @@
 import { Router } from "express";
 import AuthService from "./auth.service.js";
+import User from "../user/user.service.js"
 
 const authService = new AuthService();
 const authRouter = Router();
@@ -26,6 +27,10 @@ authRouter.post("/sign-up", async (req, res) => {
     }
 })
 
-authRouter.get()
+authRouter.get("/:username", async(req,res) => {
+    const {username} = req.params;
+    const user = new User();
+    return user.findByUsername(username);
+})
 
 export default authRouter;

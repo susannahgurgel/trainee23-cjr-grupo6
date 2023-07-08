@@ -15,8 +15,6 @@ class User {
         this.gender = gender;
         this.email = email;
         this.cargo = cargo;
-        this.admin = false;
-        this.created_at = new Date();
     }
 
     async addUser(){
@@ -24,14 +22,12 @@ class User {
 
         await prisma.User.create({
             data: {
-                id: "" + (Math.floor(Math.random() * 10000000) + 1),
                 username: this.username,
                 senha: this.senha,
                 gender: this.gender,
                 email: this.email,
                 cargo: this.cargo,
-                admin: this.admin,
-                created_at: this.created_at
+                image: "a"
             }
         })
     }
