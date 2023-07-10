@@ -27,7 +27,7 @@ class User {
                 gender: this.gender,
                 email: this.email,
                 cargo: this.cargo,
-                image: "a"
+                image: "profile-pic.png"
             }
         })
     }

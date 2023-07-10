@@ -24,6 +24,7 @@ class AuthService {
         newUser.addUser();
         return newUser;
     }
+
 }
 
 export default AuthService;

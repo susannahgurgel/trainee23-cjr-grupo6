@@ -10,7 +10,6 @@ authRouter.post("/sign-in", async (req, res) => {
 
     try{
         const token = await authService.signIn(login, password);
-        console.log(token);
     }
     catch (e){
         res.status(400).json({message: e.message});
@@ -28,9 +27,22 @@ authRouter.post("/sign-up", async (req, res) => {
 })
 
 authRouter.get("/:username", async(req,res) => {
-    const {username} = req.params;
-    const user = new User();
-    return user.findByUsername(username);
+    try{const {username} = req.params;
+        var user = new User();
+        var foundUser = await user.findByUsername(username);
+        res.json({
+            username: foundUser.username,
+            image: foundUser.image,
+            email: foundUser.email,
+            cargo: foundUser.cargo
+        })} catch(e){
+            res.status(400).json({message: e.message});
+        }
+})
+
+authRouter.get("/:username/:image", async(req,res) => {
+    const {image} = req.params;
+    res.sendFile(image, { root: '../img/' });
 })
 
 export default authRouter;

@@ -5,7 +5,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
         </style>
     <link rel="stylesheet" href="/../style/defaultLogged.css">
-    <link rel="stylesheet" href="/../style/perfil.css">
+    <link rel="stylesheet" href="../style/perfil.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CJR</title>
@@ -23,12 +23,13 @@
                 </li>
             </ul>
         </nav>
+
     </header>
 
     <div class="feed">
         <div class="user-profile">
             <div class="user-header"></div>
-            <img src="..\img\profile-pic.png" alt="user-image" class="user-image">
+            <img src="..\img\profile-pic.png" alt="user-image" id="user-image" class ="user-image">
             <div class="profile-bar">
                 <button class="profile-edit">Editar Perfil</button>
                 <p class="username">Joaozin gamer</p>
@@ -42,18 +43,23 @@
     </div>
 
     <script>
+        
         profileUsername = localStorage.getItem('page')
         document.querySelector(".username").innerHTML = profileUsername;
         fetch("http://localhost:4545/"+profileUsername)
-            .then(res => console.log(res.json))
-        try{
-            var username = localStorage.getItem('username')
-            if (username == profileUsername){
-            }
-        } catch(e){
-            res.status(400).json({message: e.message});
-        }
-
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector(".cargo").innerHTML = data.cargo;
+                document.querySelector(".email").innerHTML = data.email;
+                let imagem = data.image;
+                fetch("http://localhost:4545/"+profileUsername+"/"+imagem)
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById("user-image").src ="http://localhost:4545/"+profileUsername+"/"+imagem;
+                    console.log(document.getElementById("user-image"))
+                })
+            })
+        
     </script>
     <footer></footer>
 </body>
