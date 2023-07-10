@@ -11,33 +11,34 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  username   String   @unique
+  id         Int        @id @default(autoincrement())
+  username   String     @unique
   senha      String
   gender     String
-  email      String   @unique
+  email      String     @unique
   cargo      String
   image      String
-  admin      Boolean  @default(false)
-  created_at DateTime @default(now())
+  admin      Boolean    @default(false)
+  created_at DateTime   @default(now())
   posts      Post[]
   coments    Comments[]
 }
+
 model Post {
-  id         Int      @id @default(autoincrement())
-  user       User     @relation(fields: [user_id], references: [id])
-  user_id    Int      
-  content    String   
-  updated_at DateTime @default(now())
-  created_at DateTime @default(now())
+  id         Int        @id @default(autoincrement())
+  user       User       @relation(fields: [user_id], references: [id])
+  user_id    Int
+  content    String
+  updated_at DateTime   @default(now())
+  created_at DateTime   @default(now())
   comment    Comments[]
 }
 
 model Comments {
-  comment_id      Int      @id @default(autoincrement())
-  post            Post     @relation(fields: [post_id], references: [id])
-  post_id         Int      
-  user            User     @relation(fields: [user_id], references: [id])
-  user_id         Int      
-  content_coments String   
+  id               Int    @id @default(autoincrement())
+  post             Post   @relation(fields: [post_id], references: [id])
+  post_id          Int
+  user             User   @relation(fields: [user_id], references: [id])
+  user_id          Int
+  content_comments String
 }
