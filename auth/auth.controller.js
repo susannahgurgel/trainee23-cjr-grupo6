@@ -7,7 +7,7 @@ const authRouter = Router();
 
 authRouter.post("/sign-in", async (req, res) => {
     const { login, password } = req.body;
-
+    console.log("oi")
     try{
         const token = await authService.signIn(login, password);
     }
@@ -18,7 +18,6 @@ authRouter.post("/sign-in", async (req, res) => {
 
 authRouter.post("/sign-up", async (req, res) => {
     const { nome, genero, cargo, email, senha } = req.body;
-
     try{
         const newUser = await authService.signUp(nome, cargo, genero, email, senha);
     } catch(e){

@@ -8,13 +8,17 @@ const authRouter = Router();
 
 authRouter.post("/sign-in", async (req, res) => {
     const { login, password } = req.body;
-
     try{const userToken = await authService.signIn(login, password);
-        console.log(userToken)
-        res.json({
-            token: userToken.token
-        })} catch(e){
-            res.status(400).json({message: e.message});
+        if (userToken){
+            return res.json({
+                token: userToken.token
+            });
+        }
+        return res.json({
+            token: null
+        });
+        } catch(e){
+            throw e
         }
 })
 

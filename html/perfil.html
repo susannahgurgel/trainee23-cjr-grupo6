@@ -138,8 +138,6 @@
                                 // envia imagem p/ servidor
                                 formData.append('file', selectedFile);
 
-                                console.log(formData.get('file'))
-
                                 fetch('http://localhost:4545/send-image', {
                                     method: 'POST',
                                     body: formData

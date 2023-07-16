@@ -11,9 +11,9 @@ class AuthService {
             var user = await userService.findByUsername(userOrEmail);
         }
 
-        if (!user) throw new Error("Usuário não encontrado");
+        if (!user) return null;
 
-        if (user.senha !== password) throw new Error("Senha incorreta");
+        if (user.senha !== password) return null;
 
         const token = jwt.sign({id: user.id}, "mudarPAlgoMelhor", {expiresIn: "20m"});
         return {token};

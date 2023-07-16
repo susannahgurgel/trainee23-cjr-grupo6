@@ -9,23 +9,17 @@ userRouter.post("/user-exists", async(req,res) => {
     try{
         const foundUser = await userService.findByUsername(username);
         if (foundUser) {
-            res.json({
+            return res.json({
                 username: foundUser.username,
                 foundUser: true
             })
         }
-    } catch(e){
-        try{
-            const foundUser = await userService.findByEmail(username);
-            if (foundUser){
-                res.json({
-                    username: foundUser.username,
-                    foundUser: true
-                })
-            }
-        } catch(e) {
-            res.status(400).json({message: e.message});
-        }
+        return res.json({
+            username: null,
+            foundUser: false
+        })
+    } catch(e) {
+        throw e
     }
 })
 
