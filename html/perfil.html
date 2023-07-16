@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+        </style>
+    <link rel="stylesheet" href="/../style/default.css">
+    <link rel="stylesheet" href="../style/perfil.css">
+    <link rel="icon" href="/../img/cjr.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div id="hideAll" style="display: none"></div>
+    <script type="text/javascript">
+        document.getElementById("hideAll").style.display = "block";
+    </script>
+
+    <header id="header">
+        <div class="logo"><a href=".."><img src="..\img\cjr.png" alt="cjr"></a></div>
+        <nav class="barra-de-navegacao">
+            <ul>
+                <li class="opcao1">
+                     <a href="cadastro" class="">Criar Conta</a>
+                </li>
+                <li class="opcao2">
+                    <a href="login" class="entrar">Entrar</a>
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+
+    <section class="modal hidden">
+        <div class="profile-edit-header">
+            <button class="btn-save">Salvar</button>
+            <h3>Editar Perfil</h3>
+            <button class="btn-close">⨉</button>
+        </div>
+        <div class="edit">
+            <label for="myfile"><img src="..\img\profile-pic.png" width="100px" height="100px" alt="user" class="edit-image"></label>
+            <label for="myfile"><img src="..\img\camera.png" alt="add" class="edit-image-add"></label>
+            <input type="file" id="myfile" name="myfile" class="fileInput">
+            <ul>
+                <li><p>Nome</p> <input type="text" class="edit-nome"></li>
+                <li><p>Cargo</p> <input type="text" class="edit-cargo"></li>
+                <li><p>Email</p> <input type="text" class="edit-email"></li>
+            </ul>
+        </div>
+    </section>
+    <div class="overlay hidden"></div>
+
+    <div class="feed">
+        <div class="user-profile">
+            <div class="user-header"></div>
+            <img src="..\img\profile-pic.png" width="150px" height="150px" alt="user-image" id="user-image" class ="user-image">
+            <div class="profile-bar" id ="profile-bar">
+                <p class="username">Joaozin gamer</p>
+                <p class="cargo">Assessora</p>
+                <p class="email">Joaozin.gamer.23@cjr.org.br</p>
+            </div>
+        </div>
+        <div class="posts">
+            <p class="publicacoes">Publicações</p>
+        </div>
+    </div>
+
+    <script>
+        var profileUsername = window.location.href.split("/");
+        profileUsername = profileUsername[profileUsername.length-1];
+        var newTitle = document.createElement("title");
+        var titleText = document.createTextNode(profileUsername);
+        newTitle.appendChild(titleText)
+
+        document.getElementsByTagName("head")[0].appendChild(newTitle);
+        document.querySelector(".username").innerHTML = profileUsername;
+        fetch("http://localhost:4545/user/"+profileUsername)
+            .then(res => res.json())
+            .then(info => {
+                document.querySelector(".cargo").innerHTML = info.cargo;
+                document.querySelector(".email").innerHTML = info.email;
+                let imagemPerfil = info.image;
+                fetch("http://localhost:4545/img/"+imagemPerfil)
+                .then(res => res.text())
+                .then(info => {
+                    document.querySelector(".user-image").src ="http://localhost:4545/img/"+imagemPerfil;
+                })
+            })
+        
+        // verifica se usuário está logado, se estiver, modifica página
+        const userToken = localStorage.getItem('token');
+        if (userToken){
+            fetch("http://localhost:4545/is-signed",{
+                method:"GET",
+                headers:{
+                    "Content-type": "application/json",
+                    "authorization": "Bearer "+userToken}})
+                .then(res => res.json())
+                .then(data =>{
+                    if (!data.username){
+                        alert("Desconectado. Faça log-in novamente.")
+                        localStorage.removeItem('token'); // token expirou
+                        document.location.href = "login.html";
+                        return
+                    }
+
+                    // Edição de perfil
+                    if (data.username == profileUsername){
+                        var newButton = document.createElement("button");
+                        newButton.setAttribute("class","profile-edit");
+                        var buttonText = document.createTextNode("Editar Perfil");
+                        newButton.appendChild(buttonText);
+
+                        var profileBar = document.getElementById("profile-bar");
+                        profileBar.insertBefore(newButton, profileBar.firstChild);
+                        profileBar.style.top = "40px"
+
+                        const modal = document.querySelector(".modal");
+                        const overlay = document.querySelector(".overlay");
+                        const closeModalBtn = document.querySelector(".btn-close");
+                        const saveModalBtn = document.querySelector(".btn-save")
+                        newButton.addEventListener("click", () => {
+                            document.querySelector(".edit-image").src = document.querySelector(".user-image").src;
+                            document.querySelector(".edit-nome").value = document.querySelector(".username").innerHTML;
+                            document.querySelector(".edit-cargo").value = document.querySelector(".cargo").innerHTML;
+                            document.querySelector(".edit-email").value = document.querySelector(".email").innerHTML;
+                            modal.classList.remove("hidden");
+                            overlay.classList.remove("hidden");
+                            closeModalBtn.addEventListener("click", () => {
+                                modal.classList.add("hidden");
+                                overlay.classList.add("hidden");
+                            })
+
+                            const fileInput = document.querySelector('.fileInput');
+                            fileInput.addEventListener("change", () => {
+                                const formData = new FormData();
+                                const selectedFile = fileInput.files[0]
+                                // envia imagem p/ servidor
+                                formData.append('file', selectedFile);
+
+                                console.log(formData.get('file'))
+
+                                fetch('http://localhost:4545/send-image', {
+                                    method: 'POST',
+                                    body: formData
+                                })
+
+                                function changeImage() {
+                                    document.querySelector(".edit-image").src = "..\\img\\"+selectedFile.name
+                                }
+
+                                window.setTimeout(changeImage, 50);
+                            })
+
+                            saveModalBtn.addEventListener("click", () => {
+                                const oldImageSrc = document.querySelector(".user-image").src;
+                                const oldCargo = document.querySelector(".cargo").innerHTML;
+                                const oldEmail = document.querySelector(".email").innerHTML;
+                                const oldUsername = document.querySelector(".username").innerHTML;
+
+                                const newImageSrc = document.querySelector(".edit-image").src;
+                                const newEmail = document.querySelector(".edit-email").value;
+                                const newCargo = document.querySelector(".edit-cargo").value;
+                                const newUsername = document.querySelector(".edit-nome").value;
+
+                                document.querySelector(".user-image").src = newImageSrc;
+                                document.querySelector(".username").innerHTML = newUsername;
+                                document.querySelector(".cargo").innerHTML = newCargo;
+                                document.querySelector(".email").innerHTML = newEmail;
+
+                                var newImage = newImageSrc.split("/")
+                                newImage = newImage[newImage.length-1]
+                                var obj = {
+                                    username: oldUsername,
+                                    image: newImage,
+                                    email: newEmail,
+                                    cargo: newCargo,
+                                    newUsername: newUsername
+                                }
+                                
+                                var hasEmailChangedYet = false;
+                                var hasCargoChangedYet = false;
+                                var hasImageChangedYet = false;
+
+                                var imageIndeedChange = false;
+                                if (newImageSrc != oldImageSrc){
+                                    try{
+                                        fetch("http://localhost:4545/change-image",{
+                                            method:"POST",
+                                            headers:{
+                                                "Content-type": "application/json"
+                                            },
+                                            body:JSON.stringify(obj)
+                                        })
+                                        hasImageChangedYet = true;
+                                        imageIndeedChange = true;
+                                    } catch (e) {
+                                        document.querySelector(".user-image").src = oldImageSrc
+                                        hasImageChangedYet = true;
+                                        alert("Não foi possível mudar a foto")
+                                    }
+                                } else hasImageChangedYet = true
+
+                                if (newEmail != oldEmail){
+                                    try{
+                                        fetch("http://localhost:4545/change-email",{
+                                            method:"POST",
+                                            headers:{
+                                                "Content-type": "application/json"
+                                            },
+                                            body:JSON.stringify(obj)
+                                        })
+                                        hasEmailChangedYet = true
+                                    } catch (e) {
+                                        document.querySelector(".email").innerHTML = oldEmail;
+                                        hasEmailChangedYet = true
+                                        alert("Esse email já foi escolhido")
+                                    }
+                                } else hasEmailChangedYet = true
+    
+                                if (newCargo != oldCargo){
+                                    try{
+                                        fetch("http://localhost:4545/change-cargo",{
+                                            method:"POST",
+                                            headers:{
+                                                "Content-type": "application/json"
+                                            },
+                                            body:JSON.stringify(obj)
+                                        })
+                                        hasCargoChangedYet = true
+                                    } catch (e) {
+                                        document.querySelector(".cargo").innerHTML = oldCargo;
+                                        hasCargoChangedYet = true
+                                    }
+                                } else hasCargoChangedYet = true
+
+                                if ((newUsername != oldUsername) && (hasCargoChangedYet && hasEmailChangedYet)){
+                                    try{
+                                        fetch("http://localhost:4545/change-username",{
+                                            method:"POST",
+                                            headers:{
+                                                "Content-type": "application/json"
+                                            },
+                                            body:JSON.stringify(obj)
+                                        })
+                                    } catch (e) {
+                                        document.querySelector(".user").innerHTML = oldEmail;
+                                        alert("Esse nome de usuário já foi escolhido")
+                                    }
+                                }
+
+                                // Se tiver mudado de nome, vai p/ página nova do perfil
+                                if (document.querySelector(".username").innerHTML == newUsername && newUsername != oldUsername){
+                                    document.location.href = newUsername;
+                                }
+                                // Se tiver mudado a foto, atualiza a página
+                                if (imageIndeedChange && newImageSrc != oldImageSrc){
+                                    document.location.href = oldUsername
+                                }
+                                
+                                modal.classList.add("hidden");
+                                overlay.classList.add("hidden");
+                            })
+                        })
+                    }
+                    
+                    let username = data.username;
+                    let imagemUser = data.image;
+                    fetch("http://localhost:4545/img/log-out.png")
+                    .then(res => res.text())
+                    .then(data => {
+                        var logOut = document.querySelector(".opcao2");
+                        logOut.innerHTML = "<a href='login' class='log-out'><img src='http://localhost:4545/img/log-out.png' alt='log-out'></a>";
+                        logOut.addEventListener("click", () => {
+                            localStorage.removeItem('token')
+                            document.location.href = "login.html";
+                            return
+                        })
+                    })
+                    fetch("http://localhost:4545/img/"+imagemUser)
+                    .then(res => res.text())
+                    .then(data => {
+                        document.querySelector(".opcao1").innerHTML = "<a href='"+username+"'><span class='nav-username'>"+username+"</span><img src='http://localhost:4545/img/"+imagemUser+"' alt='user-image' id='user-image'> </a>";
+                    })
+                })
+            }
+
+            setTimeout(() => document.getElementById("hideAll").style.display = "none", 130)
+    </script>
+    <footer></footer>
+</body>
+</html>

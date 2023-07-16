@@ -1,0 +1,73 @@
+.feed {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.new-post{
+    position: relative;
+    display: inline;
+    border-radius: 12px;
+    width: 140px;
+    font-weight: 590;
+    margin: 10px;
+    border: none;
+    background: #8BC34A;
+    color: white;
+    padding: 10px 10px 10px 10px;
+}
+
+.feed-container{
+    border-width: 0px 2px 0px 2px;
+    border-color: #7E7E7E;
+    border-style: solid;
+    position: fixed;
+    left: 27%;
+    top: 6.4%;
+    display: block;
+    width: 45%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    margin: 1% 1% 1% 1%;
+}
+
+.feed-post {
+    position: relative;
+    background: #222E50;
+    border-radius: 18px;
+    margin: 10px;
+}
+
+.feed-post-user{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+}
+
+.feed-post-user img{
+    border-radius: 100%;
+    max-width: 48px;
+    max-height: auto;
+}
+
+.feed-post-user-name{
+    color: white;
+}
+
+.feed-post-user-date{
+    color: #71767B;
+}
+
+.feed-post-content{
+    position: relative;
+    color: white;
+    margin: 0px 0px 1% 10%;
+}
+
+.feed-post-comment{
+    position: relative;
+    margin: 0px 0px 1% 10%;
+}

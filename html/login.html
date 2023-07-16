@@ -5,26 +5,41 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
     </style>
+<<<<<<< Updated upstream
     <link rel="stylesheet" href="..\style\login.css">
+=======
+    <link rel="stylesheet" href="/../style/login.css">
+    <link rel="stylesheet" href="/../style/default.css">
+    <link rel="icon" href="/../img/cjr.png">
+>>>>>>> Stashed changes
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login / CJR</title>
 </head>
 
 <body>
+
     <header>
-        <div class="logo"><img src="..\img\cjr.png" alt="cjr"></div>
+        <div class="logo"><a href=".."><img src="..\img\cjr.png" alt="cjr"></a></div>
         <nav class="barra-de-navegacao">
             <ul>
                 <li>
+<<<<<<< Updated upstream
                     <a href="http://127.0.0.1:3000/html/cadastro.html" class="">Criar Conta</a>
                 </li>
                 <li>
                     <a href="http://127.0.0.1:3000/html/login.html" class="entrar">Entrar</a>
+=======
+                    <a href="cadastro" class="">Criar Conta</a>
+                </li>
+                <li>
+                    <a href="login" class="entrar">Entrar</a>
+>>>>>>> Stashed changes
                 </li>
             </ul>
         </nav>
     </header>
+    
     <main class="login">
         <div class="login-container">
             <div class="user-img">
@@ -38,15 +53,87 @@
                     </div>
                     <div class="password-input">
                         <img src="..\img\lock.png">
+<<<<<<< Updated upstream
                         <li>
                         <input type="password" placeholder="Senha">
                         <img src="..\img\eye-off-outline.png">
                         </li>
                     </div>
                     <div class="esqueceu-senha"><a href="http://127.0.0.1:3000/html/recuperacao.html">Esqueceu a senha?</a></div>
+=======
+                        <li><input type="password" placeholder="Senha" class = "iSenha"></li>
+                    </div>
+                    <div class="esqueceu-senha"><a class="recuperacao">Esqueceu a senha?</a></div>
+>>>>>>> Stashed changes
                     <div class="login-button">
                         <button>Entrar</button>
                     </div>
+<<<<<<< Updated upstream
+=======
+
+                    <script>
+                        var userLogin = document.querySelector(".iLogin");
+                        var userSenha = document.querySelector(".iSenha");
+                        var botao = document.querySelector("button");
+
+                        // faz com que pressionar enter seja equivalente a clicar no login
+                        document.addEventListener("keypress", (event) => {
+                            if (event.key === "Enter")
+                                botao.click();
+                        })
+
+                        botao.addEventListener("click", () => {
+
+                            var obj = {
+                                login: userLogin.value,
+                                password: userSenha.value
+                            }
+
+                            fetch("http://localhost:4545/sign-in",{
+                                method:"POST",
+                                headers:{
+                                    "Content-type": "application/json"
+                                },
+                                body:JSON.stringify(obj)
+                            }).then(res => res.json().then(data =>{
+                                if (!data.token){
+                                    alert("Usuário ou senha incorretos")
+                                    return
+                                }
+                                localStorage.setItem('token', data.token);
+                                localStorage.setItem('page', userLogin.value);
+                                document.location.href = "feed";
+                            }))
+                        })
+
+                        var senhaEsquecida = document.querySelector(".recuperacao");
+
+                        senhaEsquecida.addEventListener("click", () => {
+                            if (userLogin.value == ''){
+                                alert("Informe usuário")
+                                return
+                            }
+                            var obj = {
+                                username: userLogin.value
+                            }
+                            fetch("http://localhost:4545/user-exists", {
+                                method:"POST",
+                                headers:{
+                                    "Content-type": "application/json"
+                                },
+                                body:JSON.stringify(obj)
+                            })
+                            .then(res => res.json().then(data => {
+                                if (data.foundUser){
+                                    localStorage.setItem('username', data.username)
+                                    document.location.href = "recuperacao"
+                                    return
+                                }
+                                alert("Usuário não encontrado")
+                            }))
+                        })
+                    </script>
+>>>>>>> Stashed changes
                 </ul>
             </form>
         </div>

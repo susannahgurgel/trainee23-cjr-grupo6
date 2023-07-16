@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -43,4 +44,82 @@
 
     <footer></footer>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+        </style>
+    <link rel="stylesheet" href="/../style/recuperacao.css">
+    <link rel="stylesheet" href="/../style/default.css">
+    <link rel="icon" href="/../img/cjr.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperação de Senha / CJR</title>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href=".."><img src="..\img\cjr.png" alt="cjr"></a></div>
+        <nav class="barra-de-navegacao">
+            <ul>
+                <li>
+                     <a href="cadastro" class="">Criar Conta</a>
+                </li>
+                <li>
+                    <a href="login" class="entrar">Entrar</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="background-logo"><img src="..\img\cjr_bigger.png" alt="cjr"></div>
+
+    <form class="recuperacao">
+        <div class="bem-vindo"> <p>Bem vindo de volta,<br class="segunda-linha"> fulano! escolha sua<br> nova senha</p></div>
+        
+        <ul>
+            <label>Senha nova<br><br></label>
+            <li><input type="text" id="password"> <br><br></li>
+            <label>Digite novamente a senha<br><br></label>
+            <li><input type="text" id="password-confirmation"> <br><br><br><br></li>
+
+        </ul> 
+        <div class="tem-conta">Possui conta? <a href="login">Acesse aqui!</a></div>
+
+        <button type="button" id="botao">Cadastrar</button>
+    </form>
+
+    <script>
+        const username = localStorage.getItem("username");
+        if (username)
+            document.querySelector(".bem-vindo").innerHTML = "<p>Bem vindo de volta,<br>"+username+"! escolha sua<br> nova senha</p>"
+        localStorage.removeItem("username");
+        
+        var botao = document.getElementById("botao");
+
+        botao.addEventListener("click", () => {
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('password-confirmation').value;
+        
+            if (password == confirmPassword){
+                var obj = {
+                    username: username,
+                    password: password
+                    }
+                fetch("http://localhost:4545/change-password",{
+                            method:"POST",
+                            headers:{
+                                "Content-type": "application/json"
+                            },
+                            body:JSON.stringify(obj)
+                    })
+                alert("Senha redefinida com sucesso!");
+                document.location.href = "login";
+        }})
+    </script>
+
+    <footer></footer>
+</body>
+>>>>>>> Stashed changes
 </html>
