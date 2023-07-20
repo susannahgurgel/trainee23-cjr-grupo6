@@ -49,6 +49,18 @@ class Comment {
         })
     }
 
+    async findByUserId(user_id){
+        const prisma = new PrismaClient();
+        return await prisma.Comment.findMany({
+            where: {
+                user_id: user_id
+            },
+        }).catch(e => {
+            if (e.code == 'P2025') throw new Error('Nenhum comentário encontrado');
+            throw e;
+        })
+    }
+
     async findById(id){
         const prisma = new PrismaClient();
         return await prisma.Comment.findUnique({
@@ -75,14 +87,14 @@ class Comment {
         })
     }
 
-    async deletePost(id){
+    async deleteComment(id){
         const prisma = new PrismaClient();
-        await prisma.Post.delete({
+        await prisma.Comment.delete({
             where: {
                 id: id
             }
         }).catch(e => {
-            if (e.code == 'P2025') throw new Error('Post não encontrado');
+            if (e.code == 'P2025') throw new Error('Comentário não encontrado');
             throw e;
         })
     }
