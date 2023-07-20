@@ -2,65 +2,67 @@ import { PrismaClient } from '@prisma/client'
 
 class Comment {
     id;
+    post_id;
     user_id;
-    content;
-    updated_at;
-    created_at;
+    content_comments;
 
-    constructor(user_id, content, created_at){
+    constructor(post_id, user_id, content_comments){
+        this.post_id = post_id;
         this.user_id = user_id;
-        this.content = content;
-        this.created_at = created_at;
+        this.content_comments = content_comments;
     }
 
-    async addPost(){
+    async addComment(post_id){
         const prisma = new PrismaClient();
-        await prisma.Post.create({
+        await prisma.Comment.create({
+            where:{
+                post_id: post_id
+            },
             data: {
+                post_id: this.post_id,
                 user_id: this.user_id,
-                content: this.content,
-                created_at: this.created_at,
+                content_comments: this.content_comments,
             }
         }).catch(e => {
             throw e;
         })
     }
 
-    async findPosts(){
+    async findComments(){
         const prisma = new PrismaClient();
-        await prisma.Post.findMany({
+        await prisma.Comment.findMany({
         }).catch(e => {
-            if (e.code == 'P2025') throw new Error('Nenhum post encontrado');
+            if (e.code == 'P2025') throw new Error('Nenhum comentário encontrado');
             throw e;
         })
     }
 
-    async findByUser(user_id){
+    async findByPostId(post_id){
         const prisma = new PrismaClient();
-        return await prisma.Post.findMany({
+        return await prisma.Comment.findMany({
             where: {
-                user_id: user_id
+                post_id: post_id
             },
         }).catch(e => {
-            if (e.code == 'P2025') throw new Error('Post não encontrado');
+            if (e.code == 'P2025') throw new Error('Nenhum comentário encontrado');
             throw e;
         })
     }
 
     async findById(id){
         const prisma = new PrismaClient();
-        return await prisma.Post.findUnique({
+        return await prisma.Comment.findUnique({
             where: {
                 id: id
             },
         }).catch(e => {
-            if (e.code == 'P2025') throw new Error('Post não encontrado');
+            if (e.code == 'P2025') throw new Error('Comentário não encontrado');
             throw e;
         })
     }
-    async changePostContent(id, newContent){
+    async changeCommentContent(id, newContent){
         const prisma = new PrismaClient();
-        await prisma.Post.update({
+        await prisma.Comment.update({
             where: {
                 id: id
             },
@@ -68,7 +70,7 @@ class Comment {
                 content: newContent 
             }
         }).catch(e => {
-            if (e.code == 'P2025') throw new Error('Post não encontrado');
+            if (e.code == 'P2025') throw new Error('Comentário não encontrado');
             throw e;
         })
     }
@@ -88,4 +90,4 @@ class Comment {
 
 
 
-export default Post
+export default Comment
