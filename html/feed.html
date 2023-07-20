@@ -143,6 +143,9 @@
                     .then(data => {
                         document.querySelector(".opcao1").innerHTML = "<a href='"+username+"'><span class='nav-username'>"+username+"</span><img src='http://localhost:4545/img/"+imagem+"' alt='user-image' id='user-image'> </a>";
                     })
+                    fetch("http://localhost:4545/find-posts/")
+                    .then(res => res.json())
+                    .then(console.log(res))
                 })
             }
 
