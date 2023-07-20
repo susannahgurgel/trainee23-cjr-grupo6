@@ -28,7 +28,7 @@
             </ul>
         </nav>
     </header>
-    
+
     <main class="login">
         <div class="login-container">
             <div class="user-img">
@@ -38,11 +38,14 @@
                 <ul>
                     <div class="login-input">
                         <img src="..\img\user.png">
-                        <li><input type="text" placeholder="Login" class = "iLogin"></li>
+                        <li><input type="text" placeholder="Login" class="iLogin"></li>
                     </div>
                     <div class="password-input">
                         <img src="..\img\lock.png">
-                        <li><input type="password" placeholder="Senha" class = "iSenha"></li>
+                        <li><input id="senha" type="password" placeholder="Senha" class="iSenha"></li>
+                        <button id="mostrarSenha" class="eye-button">
+                            <img src="../img/eye-off-outline.png">
+                        </button>
                     </div>
                     <div class="esqueceu-senha"><a class="recuperacao">Esqueceu a senha?</a></div>
                     <div class="login-button">
@@ -68,14 +71,14 @@
                         password: userSenha.value
                     }
 
-                    fetch("http://localhost:4545/sign-in",{
-                        method:"POST",
-                        headers:{
+                    fetch("http://localhost:4545/sign-in", {
+                        method: "POST",
+                        headers: {
                             "Content-type": "application/json"
                         },
-                        body:JSON.stringify(obj)
-                    }).then(res => res.json().then(data =>{
-                        if (!data.token){
+                        body: JSON.stringify(obj)
+                    }).then(res => res.json().then(data => {
+                        if (!data.token) {
                             alert("Usuário ou senha incorretos")
                             return
                         }
@@ -88,7 +91,7 @@
                 var senhaEsquecida = document.querySelector(".recuperacao");
 
                 senhaEsquecida.addEventListener("click", () => {
-                    if (userLogin.value == ''){
+                    if (userLogin.value == '') {
                         alert("Informe usuário")
                         return
                     }
@@ -97,21 +100,33 @@
                     }
                     console.log("oi")
                     fetch("http://localhost:4545/user-exists", {
-                        method:"POST",
-                        headers:{
+                        method: "POST",
+                        headers: {
                             "Content-type": "application/json"
                         },
-                        body:JSON.stringify(obj)
+                        body: JSON.stringify(obj)
                     })
-                    .then(res => res.json().then(data => {
-                        if (data.foundUser){
-                            localStorage.setItem('username', data.username)
-                            document.location.href = "recuperacao"
-                            return
-                        }
-                        alert("Usuário não encontrado")
-                    }))
+                        .then(res => res.json().then(data => {
+                            if (data.foundUser) {
+                                localStorage.setItem('username', data.username)
+                                document.location.href = "recuperacao"
+                                return
+                            }
+                            alert("Usuário não encontrado")
+                        }))
                 })
+                const mostrarSenhaBtn = document.getElementById("mostrarSenha");
+                const senhaInput = document.getElementById("senha");
+
+                mostrarSenhaBtn.addEventListener("click", function () {
+                    if (senhaInput.type === "password") {
+                        senhaInput.type = "text";
+                        mostrarSenhaBtn.textContent = "Esconder Senha";
+                    } else {
+                        senhaInput.type = "password";
+                        mostrarSenhaBtn.textContent = "Mostrar Senha";
+                    }
+                });
             </script>
         </div>
 
