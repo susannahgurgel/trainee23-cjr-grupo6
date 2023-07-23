@@ -43,6 +43,7 @@ authRouter.get("/is-signed", jwtGuard, async(req,res) => {
         var user = new User();
         var foundUser = await user.findById(userData.id);
         res.json({
+            id: foundUser.id,
             username: foundUser.username,
             image: foundUser.image
         })} catch(e){

@@ -38,7 +38,7 @@
             </ol>
         </div>
 
-        <div id="modal" class="hidden">
+        <div class="modal hidden">
             <div id="container" class="modal-header">
                 <p></p>
                 <div id="principal"> 
@@ -51,7 +51,7 @@
                         <li style="margin-left: 30px;"><img src="../img/question-icon.png" alt="duvidas"></li>
                     </ul>
                     <div id="linhaDivisoria"></div>
-                    <input type="text" style="margin-top: 40px; width: 100vw; height: 100%; background-color: #222e50; border: none; color: white; font-size: 16px;">
+                    <textarea class="publicacao" rows="30" cols ="50" style="position: relative; margin-top: 10px; left:10px; width: 630px; height: 300px; background-color: #222e50; border: none; color: white; font-size: 16px;"></textarea>
                 </div>
                 <div id="containerButton">
                     <button id="close-modal">
@@ -63,7 +63,7 @@
                 </div>    
             </div>
         </div>
-        <div id="fade" class="hidden"> </div>
+        <div class="overlay hidden"> </div>
     </main>
 
     <script>
@@ -147,8 +147,34 @@
                     feed.insertBefore(newButton, feed.firstChild);
                     feed.style.top = "42px";
 
+                    const modal = document.querySelector(".modal");
+                    const overlay = document.querySelector(".overlay");
                     newButton.addEventListener("click", () => {
-                        alert("clico no botao")
+                        modal.classList.remove("hidden");
+                        overlay.classList.remove("hidden");
+                        const closeModal = document.getElementById("close-modal");
+                        closeModal.addEventListener("click", () => {
+                            modal.classList.add("hidden");
+                            overlay.classList.add("hidden");
+                            document.location.href = "";
+                        })
+                        const publicar = document.getElementById("publicar");
+                        publicar.addEventListener("click", () => {
+                            const conteudoPublicacao = document.querySelector(".publicacao").value;
+                            var obj = {
+                                user_id: data.id,
+                                content: conteudoPublicacao
+                            }
+
+                            fetch("http://localhost:4545/post/create-post", {
+                                method: "POST",
+                                headers:{
+                                    "Content-type": "application/json"
+                                },
+                                body:JSON.stringify(obj)
+                            })
+                            document.querySelector(".publicacao").value = "";
+                        })
                     })
 
                     let username = data.username;

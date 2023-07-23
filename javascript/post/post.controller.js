@@ -5,7 +5,7 @@ import User from "../user/user.service.js"
 const postService = new Post();
 const postRouter = Router();
 
-postRouter.post("/create-post", async (req, res) => {
+postRouter.post("/post/create-post", async (req, res) => {
     const { user_id, content } = req.body;
    try{
     postService.addPost(user_id, content)

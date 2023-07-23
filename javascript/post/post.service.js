@@ -13,13 +13,12 @@ class Post {
         this.created_at = created_at;
     }
 
-    async addPost(){
+    async addPost(user_id, content){
         const prisma = new PrismaClient();
         await prisma.Post.create({
             data: {
-                user_id: this.user_id,
-                content: this.content,
-                created_at: this.created_at,
+                user_id: user_id,
+                content: content
             }
         }).catch(e => {
             throw e;
