@@ -63,6 +63,8 @@
         <div class="posts">
             <p class="publicacoes">Publicações</p>
         </div>
+        <ol class="feed-post-list">
+        </ol>
     </div>
 
     <script>
@@ -84,6 +86,47 @@
                 .then(res => res.text())
                 .then(info => {
                     document.querySelector(".user-image").src ="http://localhost:4545/img/"+imagemPerfil;
+                })
+                fetch("http://localhost:4545/find-by-user/"+profileUsername)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.posts.length > 0){
+                        const feedList = document.querySelector(".feed-post-list");
+                        const posts = data.posts;
+                        for (post in posts) {
+                            const data = posts[post].created_at;
+                            dia = data.slice(8,10)
+                            mes = data.slice(5,7)
+                            switch (mes) {
+                                case '01': mes = "Jan"
+                                break;
+                                case '02': mes = "Fev"
+                                break;
+                                case '03': mes = "Mar"
+                                break;
+                                case '04': mes = "Abr"
+                                break;
+                                case '05': mes = "Maio"
+                                break;
+                                case '06': mes = "Jun"
+                                break;
+                                case '07': mes = "Jul"
+                                break;
+                                case '08': mes = "Ago"
+                                break;
+                                case '09': mes = "Set"
+                                break;
+                                case '10': mes = "Out"
+                                break;
+                                case '11': mes = "Nov"
+                                break;
+                                case '12': mes = "Dec"
+                                break;
+                            }
+                            dataFormatada = dia+" de "+mes;
+                            feedList.innerHTML = feedList.innerHTML + "<li class='feed-post'><div class='feed-post-user'> <img src='http://localhost:4545/img/"+imagemPerfil+"'> <a href='"+profileUsername+"' class='feed-post-user-name'>"+profileUsername+" </a> <p class='feed-post-user-date'>· "+dataFormatada+"</p> </div> <div class='feed-post-content'> <p>"+posts[post].content+"</p> </div> <div class='feed-post-comment'> <img src='http://localhost:4545/img/comment1.png' alt='comment' class='comment'> </div> </li>"
+                        }
+                    }
                 })
             })
         

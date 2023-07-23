@@ -35,68 +35,93 @@
     <main class="feed">
         <div class="feed-container">
             <ol class="feed-post-list">
-                <li class="feed-post">
-                    <div class="feed-post-user">
-                        <img src="../img/profile-pic.png" />
-                        <p class="feed-post-user-name">Joazin gamer</p>
-                        <p class="feed-post-user-date">· 17 de mar</p>
-                    </div>
-                    <div class="feed-post-content">
-                        <p>
-                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece
-                            of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock,
-                            a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure
-                            Latin
-                        </p>
-                    </div>
-                    <div class="feed-post-comment">
-                        <img src="../img/comment1.png" alt="comment">
-                    </div>
-                </li>
-                <li class="feed-post">
-                    <div class="feed-post-user">
-                        <img src="../img/profile-pic.png" />
-                        <p class="feed-post-user-name">Beltrana</p>
-                        <p class="feed-post-user-date">· 17 de mar</p>
-                    </div>
-                    <div class="feed-post-content">
-                        <p>
-                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece
-                            of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock,
-                            a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure
-                            Latin
-                        </p>
-                    </div>
-                    <div class="feed-post-comment">
-                        <img src="../img/comment1.png" alt="comment">
-                    </div>
-                </li>
-                <li class="feed-post">
-                    <div class="feed-post-user">
-                        <img src="../img/profile-pic.png" />
-                        <p class="feed-post-user-name">Fulana</p>
-                        <p class="feed-post-user-date">· 17 de mar</p>
-                    </div>
-                    <div class="feed-post-content">
-                        <p>
-                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece
-                            of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock,
-                            a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure
-                            Latin
-                        </p>
-                    </div>
-                    <div class="feed-post-comment">
-                        <img src="../img/comment1.png" alt="comment">
-                    </div>
-                </li>
-
             </ol>
         </div>
 
+        <div id="modal" class="hidden">
+            <div id="container" class="modal-header">
+                <p></p>
+                <div id="principal"> 
+                    <ul style="display: flex; margin-top: 25px; margin-left: 10px;">
+                        <li style="margin-left: 30px;"><img src="../img/b-icon.png" alt="negrito"></li>
+                        <li style="margin-left: 30px;"><img src="../img/italic-icon.png" alt="italico"></li>
+                        <li style="margin-left: 30px;"><img src="../img/h-icon.png" alt="aga"></li>
+                        <li style="margin-left: 30px;"><img src="../img/link-icon.png" alt="link"></li>
+                        <li style="margin-left: 30px;"><img src="../img/image-icon.png" alt="imagem"></li>
+                        <li style="margin-left: 30px;"><img src="../img/question-icon.png" alt="duvidas"></li>
+                    </ul>
+                    <div id="linhaDivisoria"></div>
+                    <input type="text" style="margin-top: 40px; width: 100vw; height: 100%; background-color: #222e50; border: none; color: white; font-size: 16px;">
+                </div>
+                <div id="containerButton">
+                    <button id="close-modal">
+                        Cancelar
+                    </button>
+                    <button id="publicar">
+                        Publicar
+                    </button>
+                </div>    
+            </div>
+        </div>
+        <div id="fade" class="hidden"> </div>
     </main>
 
     <script>
-
+        fetch("http://localhost:4545/post/find-posts")
+        .then(res => res.json())
+        .then(data => {
+            if (data.posts.length > 0){
+                const feedList = document.querySelector(".feed-post-list");
+                const posts = data.posts;
+                    for (post in posts) {
+                        const data = posts[post].created_at;
+                        const conteudo = posts[post].content;
+                        dia = data.slice(8,10)
+                        mes = data.slice(5,7)
+                        switch (mes) {
+                            case '01': mes = "Jan"
+                            break;
+                            case '02': mes = "Fev"
+                            break;
+                            case '03': mes = "Mar"
+                            break;
+                            case '04': mes = "Abr"
+                            break;
+                            case '05': mes = "Maio"
+                            break;
+                            case '06': mes = "Jun"
+                            break;
+                            case '07': mes = "Jul"
+                            break;
+                            case '08': mes = "Ago"
+                            break;
+                            case '09': mes = "Set"
+                            break;
+                            case '10': mes = "Out"
+                            break;
+                            case '11': mes = "Nov"
+                            break;
+                            case '12': mes = "Dec"
+                            break;
+                        }
+                        dataFormatada = dia+" de "+mes;
+                        const user_id = posts[post].user_id;
+                        fetch("http://localhost:4545/user/find-by-id/"+user_id)
+                        .then(res => res.json())
+                        .then(data => {
+                                const postImage = data.image;
+                                const postUsername = data.username;
+                                feedList.innerHTML = feedList.innerHTML + "<li class='feed-post'><div class='feed-post-user'> <img src='http://localhost:4545/img/"+postImage+"'> <a href='"+postUsername+"' class='feed-post-user-name'>"+postUsername+" </a> <p class='feed-post-user-date'>· "+dataFormatada+"</p> </div> <div class='feed-post-content'> <p>"+conteudo+"</p> </div> <div class='feed-post-comment'> <img src='http://localhost:4545/img/comment1.png' alt='comment' class='comment'> </div></li>"
+                            })
+                        }
+                    }
+                })
+        var comment = document.querySelector('.comment');
+        if (comment){
+            comment.addEventListener("click", () => {
+                console.log("oi")
+            })
+        }
         // verifica se usuário está logado, se estiver, modifica página
         const userToken = localStorage.getItem('token');
         if (userToken){
@@ -114,6 +139,7 @@
                     }
                     var newButton = document.createElement("button");
                     newButton.setAttribute("class","new-post");
+                    newButton.setAttribute("id","open-modal")
                     var buttonText = document.createTextNode("Criar Publicação");
                     newButton.appendChild(buttonText);
 
@@ -143,9 +169,6 @@
                     .then(data => {
                         document.querySelector(".opcao1").innerHTML = "<a href='"+username+"'><span class='nav-username'>"+username+"</span><img src='http://localhost:4545/img/"+imagem+"' alt='user-image' id='user-image'> </a>";
                     })
-                    fetch("http://localhost:4545/find-posts/")
-                    .then(res => res.json())
-                    .then(console.log(res))
                 })
             }
 

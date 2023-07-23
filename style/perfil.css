@@ -140,6 +140,10 @@
     background: #222E50;
 }
 
+a {
+    color: white;
+}
+
 .profile-bar{
     position: relative;
     top: 80px;
@@ -193,4 +197,43 @@ img.user-image {
     position: relative;
     padding: 2% 2%;
     font-weight: 500;
+}
+
+.feed-post {
+    position: relative;
+    background: #222E50;
+    border-radius: 18px;
+    margin: 10px;
+}
+
+.feed-post-user{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+}
+
+.feed-post-user img{
+    border-radius: 100%;
+    max-width: 48px;
+    max-height: auto;
+}
+
+.feed-post-user-name{
+    color: white;
+}
+
+.feed-post-user-date{
+    color: #71767B;
+}
+
+.feed-post-content{
+    position: relative;
+    color: white;
+    margin: 0px 0px 1% 10%;
+}
+
+.feed-post-comment{
+    position: relative;
+    margin: 0px 0px 1% 10%;
 }

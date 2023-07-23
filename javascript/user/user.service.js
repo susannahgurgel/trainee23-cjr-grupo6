@@ -146,6 +146,7 @@ class User {
 
     async findById(userId){
         const prisma = new PrismaClient();
+        userId = parseInt(userId);
         return await prisma.User.findUnique({
             where: {
                 id: userId

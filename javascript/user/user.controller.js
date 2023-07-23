@@ -4,6 +4,17 @@ import User from "./user.service.js"
 const userService = new User();
 const userRouter = Router();
 
+userRouter.get("/user/find-by-id/:user_id", async(req,res) => {
+    try{const { user_id } = req.params;
+        var foundUser = await userService.findById(user_id);
+        res.json({
+            username: foundUser.username,
+            image: foundUser.image
+        })} catch(e){
+            res.status(400).json({message: e.message});
+        }
+})
+
 userRouter.post("/user-exists", async(req,res) => {
     const { username } = req.body;
     try{

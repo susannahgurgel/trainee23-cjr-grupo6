@@ -43,13 +43,13 @@
                     <div class="password-input">
                         <img src="..\img\lock.png">
                         <li><input id="senha" type="password" placeholder="Senha" class="iSenha"></li>
-                        <button id="mostrarSenha" class="eye-button">
+                        <button id="mostrarSenha" class="eye-button" type="button">
                             <img src="../img/eye-off-outline.png">
                         </button>
                     </div>
                     <div class="esqueceu-senha"><a class="recuperacao">Esqueceu a senha?</a></div>
                     <div class="login-button">
-                        <button type="button">Entrar</button>
+                        <button type="button" class="enter">Entrar</button>
                     </div>
                 </ul>
             </form>
@@ -57,7 +57,19 @@
             <script>
                 var userLogin = document.querySelector(".iLogin");
                 var userSenha = document.querySelector(".iSenha");
-                var botao = document.querySelector("button");
+                var botao = document.querySelector(".enter");
+
+                var mostrarSenhaBtn = document.getElementById("mostrarSenha");
+                var senhaInput = document.getElementById("senha");
+                mostrarSenhaBtn.addEventListener("click", function () {
+                    if (senhaInput.type === "password") {
+                        senhaInput.type = "text";
+                        mostrarSenhaBtn.textContent = "Esconder Senha";
+                    } else {
+                        senhaInput.type = "password";
+                        mostrarSenhaBtn.textContent = "Mostrar Senha";
+                    }
+                });
 
                 // faz com que pressionar enter seja equivalente a clicar no login
                 document.addEventListener("keypress", (event) => {
@@ -98,7 +110,6 @@
                     var obj = {
                         username: userLogin.value
                     }
-                    console.log("oi")
                     fetch("http://localhost:4545/user-exists", {
                         method: "POST",
                         headers: {
@@ -115,18 +126,6 @@
                             alert("Usuário não encontrado")
                         }))
                 })
-                const mostrarSenhaBtn = document.getElementById("mostrarSenha");
-                const senhaInput = document.getElementById("senha");
-
-                mostrarSenhaBtn.addEventListener("click", function () {
-                    if (senhaInput.type === "password") {
-                        senhaInput.type = "text";
-                        mostrarSenhaBtn.textContent = "Esconder Senha";
-                    } else {
-                        senhaInput.type = "password";
-                        mostrarSenhaBtn.textContent = "Mostrar Senha";
-                    }
-                });
             </script>
         </div>
 

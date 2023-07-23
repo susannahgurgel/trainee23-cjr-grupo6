@@ -52,7 +52,6 @@ hostRouter.get("/:page", async (req, res) => {
         if (page !== "perfil")
             return res.sendFile(page+'.html', { root: __dirnameHTML });
     }
-    
     // checa se existe usuário com esse nome, se existir, vai até o perfil dele
     const user = new User();
     const foundUser = await user.findByUsername(page);

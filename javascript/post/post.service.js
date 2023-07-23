@@ -28,8 +28,7 @@ class Post {
 
     async findPosts(){
         const prisma = new PrismaClient();
-        await prisma.Post.findMany({
-        }).catch(e => {
+        return await prisma.Post.findMany().catch(e => {
             if (e.code == 'P2025') throw new Error('Nenhum post encontrado');
             throw e;
         })
