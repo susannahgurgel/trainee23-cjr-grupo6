@@ -8,17 +8,6 @@ import cors from "cors";
 
 const app = express();
 
-oasGenerator.init(app, {
-    apiDoc: './openapi.yaml',
-    route: '/api-docs',
-  });
-
-  const PORT = 3000;
-  app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
-  });
-
-
 app.use(express.json());
 app.use(cors());
 app.use(authRouter);
