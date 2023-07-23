@@ -4,123 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>criar post</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap%27');
-    </style>
-    <link rel="stylesheet" href="../style/feed.css">
-    <link rel="stylesheet" href="../style/default.css">
-    <link rel="icon" href="../img/cjr.png">
-    <link rel="stylesheet" href="../style/newpost.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/../style/style.css">
 </head>
 <body>
-    <header>
-        <div id="hideAll" style="display: none"></div>
-
-        <div class="logo"><a href=".."><img src="..\img\cjr.png" alt="cjr"></a></div>
-        <nav class="barra-de-navegacao">
-            <ul>
-                <li>
-                    <p class="adminLogado" style="margin-right: 10px; margin-top: 17px; color: white;">Admin</p>
-                </li>
-                <li>
-                    <img class="imagemRedonda" src="../img/profile-pic.png" alt="imagemPerfil" style="margin-right: 18px; margin-top: 4px;">
-                </li>
-                <li>
-                    <img class="imagemRedonda" src="../img/log-out.png" alt="imagemPerfil" style="margin-right: 10px; margin-top: 9px;">
-                </li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="feed">
-        <div class="feed-container">
-            <button id="open-modal">Criar Publicação</button>
-            <ol class="feed-post-list">
-                <li class="feed-post">
-                    <div class="feed-post-user">
-                        <img src="../img/profile-pic.png" />
-                        <p class="feed-post-user-name">Joazin gamer</p>
-                        <p class="feed-post-user-date">· 17 de mar</p>
-                        <img src="../img/trash-2.png" alt="excluir" style="margin-left: 280px;">
-                    </div>
-                    <div class="feed-post-content">
-                        <p>
-                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece
-                            of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock,
-                            a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure
-                            Latin
-                        </p>
-                    </div>
-                    <div class="feed-post-comment">
-                        <img src="" />
-
-                    </div>
-                </li>
-                <li class="feed-post">
-                    <div class="feed-post-user">
-                        <img src="../img/profile-pic.png" />
-                        <p class="feed-post-user-name">Beltrana</p>
-                        <p class="feed-post-user-date">· 17 de mar</p>
-                        <img src="../img/trash-2.png" alt="excluir" style="margin-left: 320px;">
-                    </div>
-                    <div class="feed-post-content">
-                        <p>
-                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece
-                            of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock,
-                            a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure
-                            Latin
-                        </p>
-                    </div>
-                </li>
-                <li class="feed-post">
-                    <div class="feed-post-user">
-                        <img src="../img/profile-pic.png" />
-                        <p class="feed-post-user-name">Fulana</p>
-                        <p class="feed-post-user-date">· 17 de mar</p>
-                        <img src="../img/trash-2.png" alt="excluir" style="margin-left: 335px;">
-                    </div>
-                    <div class="feed-post-content">
-                        <p>
-                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece
-                            of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock,
-                            a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure
-                            Latin
-                        </p>
-                    </div>
-                </li>
-
-            </ol>
-        </div>
-        <div id="modal" class="hide">
-            <div id="container" class="modal-header">
-                <p></p>
-                <div id="principal"> 
-                    <ul style="display: flex; margin-top: 25px; margin-left: 10px;">
-                        <li style="margin-left: 30px;""><img src="../img/b-icon.png" alt="negrito"></li>
-                        <li style="margin-left: 30px;""><img src="../img/italic-icon.png" alt="italico"></li>
-                        <li style="margin-left: 30px;""><img src="../img/h-icon.png" alt="aga"></li>
-                        <li style="margin-left: 30px;""><img src="../img/link-icon.png" alt="link"></li>
-                        <li style="margin-left: 30px;""><img src="../img/image-icon.png" alt="imagem"></li>
-                        <li style="margin-left: 30px;""><img src="../img/question-icon.png" alt="duvidas"></li>
-                    </ul>
-                    <div id="linhaDivisoria"></div>
-                    <input type="text" style="margin-top: 40px; width: 100vw; height: 100%; background-color: #222e50; border: none; color: white; font-size: 16px;">
-                </div>
-                <div id="containerButton">
-                    <button id="close-modal">
-                        Cancelar
-                    </button>
-                    <button id="publicar">
-                        Publicar
-                    </button>
-                </div>    
+    <section>
+        <div id="container">
+            <div id="principal"> 
+                <div id="linhaDivisoria"></div>
             </div>
+            <div id="containerButton">
+                <button id="cancelar">
+                    Cancelar
+                </button>
+                <button id="publicar">
+                    Publicar
+                </button>
+            </div>    
         </div>
-        <div id="fade" class="hide"> </div>
-
-    </main>
-    <footer></footer>
-    <script src="../javascript/newpost.js"></script>
+    </section>
+    
 </body>
 </html>

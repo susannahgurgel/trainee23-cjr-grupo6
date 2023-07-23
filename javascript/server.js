@@ -8,6 +8,12 @@ import cors from "cors";
 
 const app = express();
 
+const PORT = 4545;
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
+});
+
+
 app.use(express.json());
 app.use(cors());
 app.use(authRouter);
@@ -15,7 +21,3 @@ app.use(hostRouter);
 app.use(userRouter);
 app.use(postRouter);
 app.use(commentRouter);
-
-app.listen(4545, () => {
-    console.log("o servidor esta funcionando");
-})
