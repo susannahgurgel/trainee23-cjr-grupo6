@@ -112,7 +112,7 @@
     border-width: 0px 2px 0px 2px;
     border-color: #7E7E7E;
     border-style: solid;
-    position: fixed;
+    position: relative;
     left: 27%;
     top: 8.4%;
     display: block;
