@@ -1,3 +1,7 @@
+.hid{
+    display: none;
+}
+
 #container{
     position: relative;
     background: #222e50;
@@ -96,6 +100,7 @@
     border-width: 0px 2px 0px 2px;
     border-color: #7E7E7E;
     border-style: solid;
+    top: 40px;
     position: relative;
     display: block;
     width: 45%;

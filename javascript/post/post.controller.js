@@ -37,7 +37,7 @@ postRouter.get("/find-by-user/:username", async (req, res) => {
     res.status(400).json({message: e.message});
    }
 })
-postRouter.get("/find-by-id", async (req, res) => {
+postRouter.get("/find-by-id/:id", async (req, res) => {
     const {id} = req.body
     try{
     postService.findById(id)

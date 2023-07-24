@@ -4,7 +4,7 @@ import Comment from "./comment.service.js"
 const commentService = new Comment();
 const commentRouter = Router();
 
-commentRouter.post("/create-comment", async (req, res) => {
+commentRouter.post("/comment/create-comment", async (req, res) => {
     const { post_id, user_id, content } = req.body;
    try{
     commentService.addComment(post_id, user_id, content)
@@ -13,7 +13,7 @@ commentRouter.post("/create-comment", async (req, res) => {
    }
 })
 
-commentRouter.get("/find-comments", async (req, res) => {
+commentRouter.get("/comment/find-comments", async (req, res) => {
    try{
     commentService.findComments()
    } catch (e) {
@@ -21,10 +21,15 @@ commentRouter.get("/find-comments", async (req, res) => {
    }
 })
 
-commentRouter.get("/find-by-post-id", async (req, res) => {
-    const {post_id} = req.body
+commentRouter.get("/comment/find-by-post-id/:post_id", async (req, res) => {
     try{
-    commentService.findByPostId(post_id)
+    var {post_id} = req.params;
+    var comments = await commentService.findByPostId(post_id);
+    console.log("oxe")
+    console.log(comments)
+    res.json({
+        comments: comments
+    })
    } catch (e) {
        res.status(400).json({message: e.message});
     }

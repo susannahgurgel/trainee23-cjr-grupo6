@@ -66,6 +66,13 @@
         <div class="overlay hidden"> </div>
     </main>
 
+    <div class="comments hid">
+        <div class="comment-feed">
+            <ol class="feed-comment-list">
+            </ol>
+        </div>
+    </div>
+
     <script>
         fetch("http://localhost:4545/post/find-posts")
         .then(res => res.json())
@@ -76,6 +83,7 @@
                     for (post in posts) {
                         const data = posts[post].created_at;
                         const conteudo = posts[post].content;
+                        const id = posts[post].id;
                         dia = data.slice(8,10)
                         mes = data.slice(5,7)
                         switch (mes) {
@@ -111,17 +119,22 @@
                         .then(data => {
                                 const postImage = data.image;
                                 const postUsername = data.username;
-                                feedList.innerHTML = feedList.innerHTML + "<li class='feed-post'><div class='feed-post-user'> <img src='http://localhost:4545/img/"+postImage+"'> <a href='"+postUsername+"' class='feed-post-user-name'>"+postUsername+" </a> <p class='feed-post-user-date'>· "+dataFormatada+"</p> </div> <div class='feed-post-content'> <p>"+conteudo+"</p> </div> <div class='feed-post-comment'> <img src='http://localhost:4545/img/comment1.png' alt='comment' class='comment'> </div></li>"
+                                feedList.innerHTML = feedList.innerHTML + "<li class='feed-post'><div class='feed-post-user'> <img src='http://localhost:4545/img/"+postImage+"'> <a href='"+postUsername+"' class='feed-post-user-name'>"+postUsername+" </a> <p class='feed-post-user-date'>· "+dataFormatada+"</p> </div> <div class='feed-post-content'> <p>"+conteudo+"</p> </div> <div class='feed-post-comment'> <img src='http://localhost:4545/img/comment1.png' alt='comment' class='comment' onclick=openComments("+id+")> </div></li>"
                             })
                         }
                     }
                 })
-        var comment = document.querySelector('.comment');
-        if (comment){
-            comment.addEventListener("click", () => {
-                console.log("oi")
+
+        function openComments(id) {
+            const comments = document.querySelector(".comments");
+            comments.classList.remove("hid");
+            fetch("http://localhost:4545/comment/find-by-post-id/"+id)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
             })
         }
+                
         // verifica se usuário está logado, se estiver, modifica página
         const userToken = localStorage.getItem('token');
         if (userToken){
@@ -137,6 +150,7 @@
                         localStorage.removeItem('token'); // token expirou
                         return
                     }
+
                     var newButton = document.createElement("button");
                     newButton.setAttribute("class","new-post");
                     newButton.setAttribute("id","open-modal")
@@ -197,8 +211,7 @@
                     })
                 })
             }
-
-            setTimeout(() => document.getElementById("hideAll").style.display = "none", 130)
+            setTimeout(() => document.getElementById("hideAll").style.display = "none", 140)
     </script>
     <footer></footer>
 </body>

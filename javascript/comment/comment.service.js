@@ -14,7 +14,7 @@ class Comment {
 
     async addComment(post_id){
         const prisma = new PrismaClient();
-        await prisma.Comment.create({
+        await prisma.Comments.create({
             where:{
                 post_id: post_id
             },
@@ -30,8 +30,7 @@ class Comment {
 
     async findComments(){
         const prisma = new PrismaClient();
-        await prisma.Comment.findMany({
-        }).catch(e => {
+        await prisma.Comments.findMany().catch(e => {
             if (e.code == 'P2025') throw new Error('Nenhum comentário encontrado');
             throw e;
         })
@@ -39,9 +38,11 @@ class Comment {
 
     async findByPostId(post_id){
         const prisma = new PrismaClient();
-        return await prisma.Comment.findMany({
+        var id_int = parseInt(post_id);
+        console.log(id_int)
+        return await prisma.Comments.findMany({
             where: {
-                post_id: post_id
+                post_id: id_int
             },
         }).catch(e => {
             if (e.code == 'P2025') throw new Error('Nenhum comentário encontrado');
@@ -63,7 +64,7 @@ class Comment {
 
     async findById(id){
         const prisma = new PrismaClient();
-        return await prisma.Comment.findUnique({
+        return await prisma.Comments.findUnique({
             where: {
                 id: id
             },
@@ -74,7 +75,7 @@ class Comment {
     }
     async changeCommentContent(id, newContent){
         const prisma = new PrismaClient();
-        await prisma.Comment.update({
+        await prisma.Comments.update({
             where: {
                 id: id
             },
@@ -89,7 +90,7 @@ class Comment {
 
     async deleteComment(id){
         const prisma = new PrismaClient();
-        await prisma.Comment.delete({
+        await prisma.Comments.delete({
             where: {
                 id: id
             }
